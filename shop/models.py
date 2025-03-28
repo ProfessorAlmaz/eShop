@@ -2,6 +2,9 @@ import uuid
 from django.db import models
 from django.contrib.auth.models import User
 
+class ProductManager(models.Manager):
+    def in_stock(self):
+        self.get_queryset().filter(stock__gt=0)
 class Product(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField()
@@ -9,6 +12,7 @@ class Product(models.Model):
     stock = models.IntegerField()
     attributes = models.ManyToManyField('Attribute')
 
+    objects = models.Manager()
 class ProductImage(models.Model):
     image = models.ImageField()
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
