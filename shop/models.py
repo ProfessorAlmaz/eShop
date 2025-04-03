@@ -4,7 +4,11 @@ from django.contrib.auth.models import User
 
 class ProductManager(models.Manager):
     def in_stock(self):
-        self.get_queryset().filter(stock__gt=0)
+        return self.get_queryset().filter(stock__gt=0)
+    def sort_decay(self):
+        return self.get_queryset().order_by('-price')
+    def sort_increasing(self):
+        return self.get_queryset().order_by('price')
 class Product(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField()
