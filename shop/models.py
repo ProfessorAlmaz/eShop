@@ -16,14 +16,28 @@ class Product(models.Model):
     stock = models.IntegerField()
     attributes = models.ManyToManyField('Attribute')
 
-    objects = models.Manager()
+    objects = ProductManager()
+
+    class Meta:
+        verbose_name = 'Продукт'
+        verbose_name_plural = 'Продукты'
+        indexes = [models.Index(fields=['price'])]
+
+
 class ProductImage(models.Model):
     image = models.ImageField()
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
 
+    class Meta:
+        verbose_name = 'Картинка'
+        verbose_name_plural = 'Картинки'
 
 class Attribute(models.Model):
     name = models.CharField(max_length=255)
+
+    class Meta:
+        verbose_name = 'Атрибут'
+        verbose_name_plural = 'Атрибуты'
 
 class Order(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -32,4 +46,4 @@ class Order(models.Model):
 class OrderItem(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
-    quantity = models.IntegerField(default=1)
+    quntity = models.IntegerField(default=1)
