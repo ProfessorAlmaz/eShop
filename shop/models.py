@@ -19,25 +19,25 @@ class Product(models.Model):
     objects = ProductManager()
 
     class Meta:
-        verbose_name = 'Продукт'
-        verbose_name_plural = 'Продукты'
-        indexes = [models.Index(fields=['price'])]
-
+        db_table = 'product'
+        indexes = [models.Index(fields=['title'])]
+        verbose_name = 'Товар'
+        verbose_name_plural = 'Товары'
 
 class ProductImage(models.Model):
     image = models.ImageField()
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
 
-    class Meta:
-        verbose_name = 'Картинка'
-        verbose_name_plural = 'Картинки'
+    # class Meta:
+    #     verbose_name = 'Картинка'
+    #     verbose_name_plural = 'Картинки'
 
 class Attribute(models.Model):
     name = models.CharField(max_length=255)
 
-    class Meta:
-        verbose_name = 'Атрибут'
-        verbose_name_plural = 'Атрибуты'
+    # class Meta:
+    #     verbose_name = 'Атрибут'
+    #     verbose_name_plural = 'Атрибуты'
 
 class Order(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
