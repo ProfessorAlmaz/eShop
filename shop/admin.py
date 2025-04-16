@@ -1,4 +1,4 @@
-from django.contrib import admin
+from django.contrib import admin, messages
 
 from shop.models import (
     Product,
@@ -7,13 +7,13 @@ from shop.models import (
 )
 from shop.filters import ProductStockFilter
 
-class ProductImageInline(admin.TabularInline):
-    model = ProductImage
-    extra = 1
+# class ProductImageInline(admin.TabularInline):
+#     model = ProductImage
+#     extra = 1
 
-admin.site.register(Product)
-admin.site.register(ProductImage)
-admin.site.register(Attribute)
+# admin.site.register(Product)
+# admin.site.register(ProductImage)
+# admin.site.register(Attribute)
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
@@ -31,9 +31,7 @@ class ProductAdmin(admin.ModelAdmin):
     def get_attributes(self, obj: Product):
         return list(obj.attributes.all())
 
-    @admin.action(
-        description="Обнулить остатки"
-    )
+    @admin.action(description="Обнулить остатки")
     def set_zero_stock(self, request, queryset):
         queryset.update(stock=0)
         self.message_user(
@@ -42,9 +40,9 @@ class ProductAdmin(admin.ModelAdmin):
             message="Остатки по товарам обнулены",
         )
 
-    def get_queryset(self, request):
-        qs = super().get_queryset(request)
-        return qs.prefetch_related('productimage_set', 'attributes')
+    # def get_queryset(self, request):
+    #     qs = super().get_queryset(request)
+    #     return qs.prefetch_related('productimage_set', 'attributes')
 
 @admin.register(ProductImage)
 class ProductImageAdmin(admin.ModelAdmin):
