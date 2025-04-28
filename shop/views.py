@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpRequest
 from shop.models import Product
 
-def main_page(request: HttpRequest):
+def all_products(request: HttpRequest):
     print(f"{request.method=}")
     print(f"{request.content_type=}")
     print(f"{request.GET=}")
