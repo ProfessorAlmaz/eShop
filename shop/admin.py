@@ -17,7 +17,7 @@ from shop.filters import ProductStockFilter
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    inlines = [ProductImageInline]
+    #inlines = [ProductImageInline]
     search_fields = ('title', 'description')
     list_filter = ("attributes", ProductStockFilter)
     list_display = ('title', 'price', 'stock', 'images', 'get_attributes')
