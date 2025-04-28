@@ -11,6 +11,6 @@ def all_products(request: HttpRequest):
     product_titles = Product.objects.values_list("title", flat=True)
     titles = b""
     for title in product_titles:
-        titles += title.ecode("utf-8") + b"\n"
+        titles += title.encode("utf-8") + b"\n"
         print(f"{titles.decode('utf-8')=}")
     return HttpResponse(titles)
