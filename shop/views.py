@@ -5,5 +5,5 @@ from shop.models import Product
 
 def all_products(request: HttpRequest):
     products = Product.objects.all()
-    return render(request, template_name='index.html',
+    return render(request, template_name='products.html',
         context={'products': products})
