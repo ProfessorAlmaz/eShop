@@ -25,7 +25,7 @@ class Product(models.Model):
         verbose_name_plural = 'Товары'
 
 class ProductImage(models.Model):
-    image = models.ImageField(upload_to="media")
+    image = models.ImageField(upload_to="products/")
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
 
     # class Meta:
