@@ -7,20 +7,17 @@ from shop.models import (
 )
 from shop.filters import ProductStockFilter
 
-# class ProductImageInline(admin.TabularInline):
-#     model = ProductImage
-#     extra = 1
+class ProductImageInline(admin.TabularInline):
+     model = ProductImage
+     extra = 1
 
-# admin.site.register(Product)
-# admin.site.register(ProductImage)
-# admin.site.register(Attribute)
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    #inlines = [ProductImageInline]
+    inlines = [ProductImageInline]
     search_fields = ('title', 'description')
     list_filter = ("attributes", ProductStockFilter)
-    list_display = ('title', 'price', 'stock', 'images', 'get_attributes')
+    list_display = ('id', 'title', 'price', 'stock', 'images', 'get_attributes')
     actions = ("set_zero_stock",)
 
     @admin.display(description="Фото товара")
