@@ -1,13 +1,19 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <title>Главная страница</title>
-</head>
-<body>
-    <h1>Hello World!</h1>
-    <p> Текущее время: {{current_time}} </p>
+{% extends 'common.html' %}
+{% block styles %}
+    {% load static %}
+    <link rel="stylesheet" href={% static 'product.css' %}>
+{% endblock styles %}
+{% block content %}
+    <div class="products">
     {% for product in products %}
+        <div class="card" style="width: 18rem;">
+          <img src="{{ product.productimage_set.all.0.image.url }}" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">{{product.title}}</h5>
+            <p class="card-text">{{ product.description }}</p>
+            <a href="#" class="btn btn-primary">Перейти к товару</a>
+          </div>
+        </div>
         <div>
             <hr>
             <p>Название: {{ product.title }}</p>
@@ -23,5 +29,5 @@
             <hr>
         </div>
     {% endfor %}
-</body>
-</html>
+    </div>
+{% endblock content %}
