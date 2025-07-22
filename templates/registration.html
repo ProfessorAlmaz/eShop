@@ -1,5 +1,16 @@
 {% extends 'common.html' %}
 
+{% block styles %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'auth.css' %}">
+{% endblock styles %}
+
 {% block content %}
-    {{ form }}
+    <div class="registration">
+        <form method="POST">
+            {% csrf_token %}
+            {{ form }}
+            <button type="submit" class="btn btn-success" style="margin-top: 10px">Зарегистрироваться</button>
+        </form>
+    </div>
 {% endblock content %}
