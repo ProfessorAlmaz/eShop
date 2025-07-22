@@ -12,7 +12,7 @@ def all_products(request: HttpRequest):
         'products': products,
         "is_authenticated": request.user.is_authenticated})
 
-def register_page(request: HttpRequest):
+def registration_view(request: HttpRequest):
     if request.method == "POST":
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
