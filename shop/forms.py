@@ -52,3 +52,9 @@ class UserAuthForm(forms.Form):
         if len(username) < 3:
             self.errors['username'] = "Поле не может быть меньше 3 символов"
         return username
+
+    def clean_password(self):
+        password = self.cleaned_data.get('password')
+        if len(password) < 8:
+            self.errors['password'] = 'Пароль не может быть меньше 8 символов'
+        return password
