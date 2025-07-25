@@ -18,12 +18,14 @@ from django.contrib import admin
 from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
-from shop.views import all_products, registration_view
+from shop.views import all_products, registration_view, login_page, logout_page
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', all_products, name="main_page"),
     path('register/', registration_view, name="register_page"),
+    path("login/", login_page, name="login-page"),
+    path("logout/", logout_page, name="logout-page"),
 ]
 
 if settings.DEBUG:

@@ -6,11 +6,11 @@
 {% endblock styles %}
 
 {% block content %}
-    <div class="registration">
+    <div class="auth">
         <form method="POST">
             {% csrf_token %}
             {{ form }}
-            <button type="submit" class="btn btn-success" style="margin-top: 10px">Зарегистрироваться</button>
+            <button type="submit" class="btn btn-success auth-btn">Зарегистрироваться</button>
         </form>
     </div>
 {% endblock content %}
