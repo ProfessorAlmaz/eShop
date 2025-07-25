@@ -34,14 +34,21 @@ class UserAuthForm(forms.Form):
         strip=False
     )
 
-    def clean(self):
+    # def clean(self):
+    #     username = self.cleaned_data.get('username')
+    #     password = self.cleaned_data.get('password')
+    #
+    #     if len(username) < 3:
+    #         self.add_error("username", "Имя пользователя не может быть меньше 3 символов")
+    #
+    #     if len(password) < 8:
+    #         self.add_error("password", "Пароль не может быть меньше 8 символов")
+    #
+    #     return self.cleaned_data
+
+    def clean_username(self):
         username = self.cleaned_data.get('username')
-        password = self.cleaned_data.get('password')
 
         if len(username) < 3:
-            self.add_error("username", "Имя пользователя не может быть меньше 3 символов")
-
-        if len(password) < 8:
-            self.add_error("password", "Пароль не может быть меньше 8 символов")
-
-        return self.cleaned_data
+            self.errors['username'] = "Поле не может быть меньше 3 символов"
+        return username
