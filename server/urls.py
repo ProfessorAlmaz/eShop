@@ -18,11 +18,12 @@ from django.contrib import admin
 from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
-from shop.views import all_products, logout_user, RegistrationView, LoginView
+
+from shop.views import AllProductsView, logout_user, RegistrationView, LoginView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', all_products, name="main_page"),
+    path('', AllProductsView.as_view(), name="all_products"),
     path('register/', RegistrationView.as_view(), name="register_page"),
     path("login/", LoginView.as_view(), name="login-page"),
     path("logout/", logout_user, name="logout-user"),

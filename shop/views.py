@@ -6,15 +6,30 @@ from shop.forms import CustomUserCreationForm, UserAuthForm
 from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
 from django.views import View
+from django.views.generic import ListView
 
-def all_products(request: HttpRequest):
-    current_time = datetime.now()
-    products = Product.objects.all()
-    return render(request, template_name='products.html', context={
-        'current_time': current_time,
-        'products': products,
-        "is_authenticated": request.user.is_authenticated})
 
+class AllProductsView(ListView):
+    template_name = 'products.html'
+    model = Product
+    context_object_name = 'product'
+    ordering = ['title']
+    def get_context_data(self, **kwargs):
+        data = super().get_context_data(**kwargs)
+        data["is_authenticated"] = self.request.user.is_authenticated
+        return data
+
+# def all_products(request: HttpRequest):
+#     current_time = datetime.now()
+#     products = Product.objects.all()
+#     return render(request, template_name='products.html', context={
+#         'current_time': current_time,
+#         'products': products,
+#         "is_authenticated": request.user.is_authenticated})
+
+    def get_queryset(self):
+        qs = super().get_queryset()
+        return qs.prefetch_related("productimage_set")
 def registration_view(request: HttpRequest):
     if request.method == "POST":
         form = CustomUserCreationForm(request.POST)
