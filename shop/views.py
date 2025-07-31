@@ -12,7 +12,7 @@ from django.views.generic import ListView
 class AllProductsView(ListView):
     template_name = 'products.html'
     model = Product
-    context_object_name = 'product'
+    context_object_name = 'products'
     ordering = ['title']
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)
