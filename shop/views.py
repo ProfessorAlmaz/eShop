@@ -24,7 +24,7 @@ def registration_view(request: HttpRequest):
     form = CustomUserCreationForm()
     return render(request, "registration.html", context={"form": form})
 
-class RegistrationView(View):
+class LoginView(View):
 
     @staticmethod
     def get(request: HttpRequest):
@@ -49,6 +49,23 @@ class RegistrationView(View):
 
         form = UserAuthForm()
         return render(request, "login.html", context={"form": form})
+
+class RegistrationView(View):
+    @staticmethod
+    def get(request: HttpRequest):
+        form = CustomUserCreationForm()
+        return render(request, 'registration.html', context={"form": form})
+
+    @staticmethod
+    def post(request: HttpRequest):
+        if request.method == "POST":
+            form = CustomUserCreationForm(request.POST)
+            if form.is_valid():
+                form.save()
+                return redirect("all-products")
+        form = CustomUserCreationForm()
+        return render(request, 'registration.html', context={"form": form})
+
 
 # def login_page(request: HttpRequest):
 #     if request.method == "POST":
