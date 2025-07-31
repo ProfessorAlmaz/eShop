@@ -5,6 +5,7 @@ from shop.models import Product
 from shop.forms import CustomUserCreationForm, UserAuthForm
 from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
+from django.views import View
 
 def all_products(request: HttpRequest):
     current_time = datetime.now()
@@ -23,9 +24,15 @@ def registration_view(request: HttpRequest):
     form = CustomUserCreationForm()
     return render(request, "registration.html", context={"form": form})
 
+class RegistrationView(View):
 
-def login_page(request: HttpRequest):
-    if request.method == "POST":
+    @staticmethod
+    def get(request: HttpRequest):
+        form = UserAuthForm()
+        return render(request, "login.html", context={"form": form})
+
+    @staticmethod
+    def post(request: HttpRequest):
         form = UserAuthForm(request.POST)
         if form.is_valid():
             username = form.cleaned_data.get("username")
@@ -40,8 +47,27 @@ def login_page(request: HttpRequest):
         else:
             messages.error(request, form.errors)
 
-    form = UserAuthForm()
-    return render(request, "login.html", context={"form": form})
+        form = UserAuthForm()
+        return render(request, "login.html", context={"form": form})
+
+# def login_page(request: HttpRequest):
+#     if request.method == "POST":
+#         form = UserAuthForm(request.POST)
+#         if form.is_valid():
+#             username = form.cleaned_data.get("username")
+#             password = form.cleaned_data.get("[password")
+#             user = authenticate(request, username=username, password=password)
+#
+#             if user is not None:
+#                 login(request, user)
+#                 return redirect("main-page")
+#             else:
+#                 messages.error(request, "Неверное имя пользователя или пароль")
+#         else:
+#             messages.error(request, form.errors)
+#
+#     form = UserAuthForm()
+#     return render(request, "login.html", context={"form": form})
 
 def logout_user(request: HttpRequest):
     logout(request)
