@@ -1,0 +1,23 @@
+{% extends 'common.html %}
+
+{% block styles %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'detail.css' %}">
+{% endblock styles %}
+
+{% block content %}
+    <div class="product-container">
+        <div class="image-container">
+            {% for image in product.productimage_set.all %}
+                <img src="{{ image.image.url }}" alt="" height="300px">
+            {% endfor %}
+        </div>
+        <div class="info-container">
+            <h1>{{ product.title }}</h1>
+            <p>{{ product.description }}</p>
+            <h3>{{ product.price }}</h3>
+            <a href="{% url 'product-detail' product.id %}" type="button" class="btn btn-danger">Добавить в корзину</a>
+        </div>
+    </div>
+
+{% endblock content %}
