@@ -7,17 +7,15 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
 from django.views import View
 from django.views.generic import ListView, DetailView
+from shop.mixins import IsAuthenticatedMixin
 
 
-class AllProductsView(ListView):
+class AllProductsView(IsAuthenticatedMixin, ListView):
     template_name = 'products.html'
     model = Product
     context_object_name = 'products'
     # ordering = ['title']
-    def get_context_data(self, **kwargs):
-        data = super().get_context_data(**kwargs)
-        data["is_authenticated"] = self.request.user.is_authenticated
-        return data
+
 
 # def all_products(request: HttpRequest):
 #     current_time = datetime.now()
@@ -105,7 +103,7 @@ def logout_user(request: HttpRequest):
     logout(request)
     return redirect("main-page")
 
-class ProductDetailView(DetailView):
+class ProductDetailView(IsAuthenticatedMixin, DetailView):
     model = Product
     template_name = 'product_detail.html'
     context_object_name = 'product'
