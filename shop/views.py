@@ -7,6 +7,7 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
 from django.views import View
 from django.views.generic import ListView, DetailView
+from django.http.response import JsonResponse
 from shop.mixins import IsAuthenticatedMixin
 
 
@@ -111,3 +112,9 @@ class ProductDetailView(IsAuthenticatedMixin, DetailView):
     def get_queryset(self):
         qs = super().get_queryset()
         return qs.prefetch_related("productimage_set")
+
+class CartView(View):
+    @staticmethod
+    def post(request: HttpRequest):
+        print(f"{request.body.decode('utf-8')=}")
+        return JsonResponse({"success": True})

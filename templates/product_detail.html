@@ -6,6 +6,44 @@
 {% endblock styles %}
 
 {% block content %}
+    <script>
+        window.addEventListener('load', function() {
+            let toCartBtn = document.getElementById("add-to-cart");
+            function getCookie(name) {
+                let cookieValue = null;
+                if (document.cookie && document.cookie !== '') {
+                    const cookies = document.cookie.split(';');
+                    for (let i = 0; i < cookies.length; i++) {
+                        const cookie = cookies[i].trim();
+                        // Does this cookie string begin with the name we want?
+                        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                            break;
+                        }
+                    }
+                }
+                return cookieValue;
+            }
+            const csrftoken = getCookie('csrftoken');
+
+            toCartBtn.onclick = function (event) {
+                fetch('{% url "cart" %}'), {
+                    method: 'POST',
+                    headers: {
+                        "Content-type": "application/json",
+                        "X-CSRFToken": csrftoken
+                    },
+                    body: JSON.stringify({
+                        "productId": 123
+                    })
+                })
+                    .then(response => response.json())
+                    .then(data => console.log(data))
+                    .catch(error => console.log(error))
+            }
+        });
+    </script>
+
     <div class="product-container">
         <div class="image-container">
             {% for image in product.productimage_set.all %}
@@ -16,7 +54,7 @@
             <h1>{{ product.title }}</h1>
             <p>{{ product.description }}</p>
             <h3>{{ product.price }}</h3>
-            <a href="{% url 'product-detail' product.id %}" type="button" class="btn btn-danger">Добавить в корзину</a>
+            <a href="{% url 'product-detail' product.id %}" type="button" class="btn btn-danger" id="add-to-cart">Добавить в корзину</a>
         </div>
     </div>
 
