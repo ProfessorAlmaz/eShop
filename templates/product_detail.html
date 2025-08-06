@@ -9,6 +9,10 @@
     <script>
         window.addEventListener('load', function() {
             let toCartBtn = document.getElementById("add-to-cart");
+                increase = document.getElementById("increase"),
+                decrease = document.getElementById("decrease"),
+                counter = document.getElementById("counter")
+
             function getCookie(name) {
                 let cookieValue = null;
                 if (document.cookie && document.cookie !== '') {
@@ -41,6 +45,20 @@
                     .then(data => console.log(data))
                     .catch(error => console.log(error))
             }
+            increase.onclick = function (event) {
+                let value = parseInt(counter.innerHTML);
+                if (isNaN(value)) value = 0;
+                if (value < {{ product.stock }}) value++;
+                counter.innerHTML = value.toString();
+            }
+
+            decrease.onclick = function (event) {
+                let value = parseInt(counter.innerHTML);
+                if (isNaN(value)) value = 0;
+                if (value > 0) value--;
+                counter.innerHTML = value.toString();
+            }
+
         });
     </script>
 
@@ -54,6 +72,11 @@
             <h1>{{ product.title }}</h1>
             <p>{{ product.description }}</p>
             <h3>{{ product.price }}</h3>
+            <div class="counter-block">
+                <button class="btn btn-light" id="decrease">-</button>
+                <b id="counter">0</b>
+                <button class="btn btn-light" id="increase">+</button>
+            </div>
             <a href="{% url 'product-detail' product.id %}" type="button" class="btn btn-danger" id="add-to-cart">Добавить в корзину</a>
         </div>
     </div>

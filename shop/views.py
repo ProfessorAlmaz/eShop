@@ -8,6 +8,9 @@ from django.contrib import messages
 from django.views import View
 from django.views.generic import ListView, DetailView
 from django.http.response import JsonResponse
+from django.views.decorators.csrf import ensure_csrf_cookie
+from django.utils.decorators import method_decorator
+
 from shop.mixins import IsAuthenticatedMixin
 
 
@@ -29,6 +32,7 @@ class AllProductsView(IsAuthenticatedMixin, ListView):
     def get_queryset(self):
         qs = super().get_queryset()
         return qs.prefetch_related("productimage_set")
+
 def registration_view(request: HttpRequest):
     if request.method == "POST":
         form = CustomUserCreationForm(request.POST)
@@ -104,6 +108,7 @@ def logout_user(request: HttpRequest):
     logout(request)
     return redirect("main-page")
 
+@method_decorator(ensure_csrf_cookie, name="dispatch")
 class ProductDetailView(IsAuthenticatedMixin, DetailView):
     model = Product
     template_name = 'product_detail.html'
