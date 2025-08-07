@@ -125,6 +125,8 @@ class CartView(View):
     def get(request: HttpRequest, product_id: int):
         cart = request.session.get("cart")
 
+        raise ValueError("Какая-то ошибка")
+
         if cart is None:
             return JsonResponse({"detail": "Cart doesn't exists."}, status=404)
 
