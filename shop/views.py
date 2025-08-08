@@ -206,4 +206,4 @@ class ShowCartView(View):
         return render(
             request,
             "cart.html",
-            context={"cart": product_quantity_cart, "discount": })
+            context={"cart": product_quantity_cart, "discount": request.discount})
