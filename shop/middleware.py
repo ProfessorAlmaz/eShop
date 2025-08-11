@@ -3,7 +3,7 @@ from django.http.response import JsonResponse
 
 logger = logging.getLogger(__name__)
 
-class DiskountMiddleware:
+class DiscountMiddleware:
     def __init__(self, get_response):
         self.get_response = get_response
 
