@@ -179,7 +179,7 @@ class CartView(View):
         request.session.update({"cart": cart})
         return JsonResponse({}, status=204)
 
-class DiscountMiddleware(View):
+class ShowCartView(View):
     @staticmethod
     def get(request: HttpRequest):
         cart = request.session.get("cart")
