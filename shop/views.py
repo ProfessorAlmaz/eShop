@@ -34,7 +34,7 @@ class AllProductsView(IsAuthenticatedMixin, ListView):
 
     def get_queryset(self):
         qs = super().get_queryset()
-        return qs.prefetch_related("productimage_set")
+        return qs.prefetch_related("productimage_set", "attributes")
 
 def registration_view(request: HttpRequest):
     if request.method == "POST":
@@ -81,10 +81,14 @@ class RegistrationView(View):
     def post(request: HttpRequest):
         if request.method == "POST":
             form = CustomUserCreationForm(request.POST)
+            print("valid", form.is_valid())
             if form.is_valid():
+                print("Form valid")
                 form.save()
                 return redirect("all-products")
+
         form = CustomUserCreationForm()
+        print(form)
         return render(request, 'registration.html', context={"form": form})
 
 
