@@ -62,7 +62,7 @@ class LoginView(View):
 
             if user is not None:
                 login(request, user)
-                return redirect("main-page")
+                return redirect("all-products")
             else:
                 messages.error(request, "Неверное имя пользователя или пароль")
         else:
