@@ -109,7 +109,7 @@ class RegistrationView(View):
 
 def logout_user(request: HttpRequest):
     logout(request)
-    return redirect("main-page")
+    return redirect("all-products")
 
 @method_decorator(ensure_csrf_cookie, name="dispatch")
 class ProductDetailView(IsAuthenticatedMixin, DetailView):
